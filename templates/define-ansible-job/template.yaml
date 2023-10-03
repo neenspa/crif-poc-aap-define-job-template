@@ -177,7 +177,7 @@ spec:
       action: publish:github
       input:
         allowedHosts: ["github.com"]
-        description: This is a test
+        description: This is Ansible Automation Platform template to create a VM on Vsphere and install an apache server on it.
         repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}
         repoVisibility: public
         defaultBranch: main
