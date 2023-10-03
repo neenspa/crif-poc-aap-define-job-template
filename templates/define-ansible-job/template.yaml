@@ -46,6 +46,13 @@ spec:
         - project
         - playbook
         - ask_vars_on_launch
+        - credential
+        - connection_secret
+        - vm_name
+        - vm_template_from
+        - vm_library
+        - vm_cpus
+        - vm_memory
       properties:
         name:
           title: Name of the Ansible Job Template
@@ -76,14 +83,46 @@ spec:
           default: aap
         credential:
           title: Credential
-          type: string
+          type: array
           description: Specify the credential to use for the job
-          default: aap
+          items:
+            type: string
+            enum:
+              - CentOS root
+              - VEGA-VCenter
+          uniqueItems: true
+          ui:widget: checkboxes
         connection_secret:
           title: Connection Secret
           type: string
           description: Specify the connection secret to use for the job
           default: aapaccess
+        vm_name:
+          title: Name of Vm
+          type: string
+          description: Vm name to be create
+        vm_template_from:
+          title: Source template for Vm
+          type: string
+          default: CentOS7
+          enum:
+            - CentOS7
+          enumNames:
+            - "CentOS7"
+        vm_library:
+          title: Library template for Vm
+          type: string
+          default: Crif-PoC
+          enum:
+            - Crif-PoC
+          enumNames:
+            - "Crif-PoC"
+        vm_cpus:
+          title: Override VM cpus numbers
+          type: string
+        vm_memory:
+          title: Override VM RAM (in MB)
+          type: string
         extra_vars:
           title: Extra Vars
           type: string
@@ -112,7 +151,13 @@ spec:
           project: ${{ parameters.project }}
           playbook: ${{ parameters.playbook }}
           connection_secret: ${{ parameters.connection_secret }}
-          extra_vars: ${{ parameters.extra_vars }}
+          vm_name: ${{ parameters.vm_name }}
+          vm_template_from: ${{ parameters.vm_template_from }}
+          vm_library: ${{ parameters.vm_library }}
+          vm_cpus: ${{ parameters.vm_cpus }}
+          vm_memory: ${{ parameters.vm_memory }}
+          extra_vars: 
+            ${{ parameters.extra_vars }}
           ask_vars_on_launch: ${{ parameters.ask_vars_on_launch }}
 
     - id: catalogTemplate
