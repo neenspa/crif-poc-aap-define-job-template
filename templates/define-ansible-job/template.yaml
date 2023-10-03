@@ -174,20 +174,21 @@ spec:
 
     - id: publish
       name: Publishing to Source Code Repository
-      action: publish:github:pull-request
+      action: publish:github
       input:
-        allowedHosts: ['github.com']
-        title: ${{ parameters.name }}-job-tmp
-        description: ${{ parameters.name }}-job-tmp
+        allowedHosts: ["github.com"]
+        description: This is a test
         repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}
-        branchName: ${{ parameters.name }}-job-tmp
+        repoVisibility: public
+        defaultBranch: main
+        gitCommitMessage: "feat(all): first commit"
 
     - id: register
       name: Registering the Catalog Info Component
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "skeletons/catalog-info/catalog-info.yaml"
 
   output:
     links:
