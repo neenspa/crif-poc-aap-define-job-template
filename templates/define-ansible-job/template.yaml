@@ -112,11 +112,11 @@ spec:
         vm_library:
           title: Library template for Vm
           type: string
-          default: Crif-PoC
+          default: CRIF-PoC
           enum:
-            - Crif-PoC
+            - CRIF-PoC
           enumNames:
-            - "Crif-PoC"
+            - "CRIF-PoC"
         vm_cpus:
           title: Override VM cpus numbers
           type: string
