@@ -14,12 +14,12 @@ spec:
   parameters:
     - title: Provide information about the GitHub location
       required:
-        - githubOrg
+        - orgName
         - repoName
         - owner
         - system
       properties:
-        githubOrg:
+        orgName:
           title: GitHub Organization
           type: string
         owner:
@@ -166,7 +166,7 @@ spec:
       input:
         url: skeletons/catalog-info/
         values:
-          githubOrg: ${{ parameters.githubOrg }}
+          orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
           owner: ${{ parameters.owner }}
           applicationType: api
@@ -178,7 +178,7 @@ spec:
       input:
         allowedHosts: ["github.com"]
         description: This is Ansible Automation Platform template to create a VM on Vsphere and install an apache server on it.
-        repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}
+        repoUrl: github.com?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
         repoVisibility: public
         defaultBranch: main
         gitCommitMessage: "feat(all): first commit"
