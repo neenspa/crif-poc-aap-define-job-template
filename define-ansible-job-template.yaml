@@ -164,7 +164,7 @@ spec:
       name: Generating the Catalog Info Component
       action: fetch:template
       input:
-        url: ../../skeletons/catalog-info/
+        url: skeletons/catalog-info/
         values:
           githubOrg: ${{ parameters.githubOrg }}
           repoName: ${{ parameters.repoName }}
@@ -225,7 +225,7 @@ spec:
         namespace: ${{parameters.namespace}}
         repoUrl: https://github.com/${{parameters.orgName}}/${{ parameters.repoName }}-argocd.git
         path: 'argocd/'
-        
+
   output:
     links:
       - title: Source Code Repository
