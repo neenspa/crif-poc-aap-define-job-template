@@ -190,6 +190,42 @@ spec:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
+    - id: templateGitops
+      name: Generating the deployment resources and artefacts
+      action: fetch:template
+      input:
+        url: ./manifests
+        copyWithoutTemplating: []
+        values:
+          component_id: ${{parameters.repoName}}
+          namespace: ${{parameters.namespace}}
+          repo: https://github.com/${{parameters.orgName}}/${{parameters.repoName}}
+        targetPath: ./tenant-gitops
+      
+    - id: publishGitops
+      name: Publishing to ArgoCD Repository
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        title: ${{ parameters.name }}-job-argocd
+        description: "Argo application files"
+        repoUrl: github.com?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}-argocd
+        gitCommitMessage: "Create Argo app"
+        defaultBranch: main
+        protectDefaultBranch: false
+        repoVisibility: public
+        sourcePath: ./tenant-gitops
+
+    - id: createArgoResources
+      name: Create ArgoCD Resources
+      action: argocd:create-resources
+      input:
+        appName: ${{parameters.repoName}}-app
+        argoInstance: argoInstance1
+        namespace: ${{parameters.namespace}}
+        repoUrl: https://github.com/${{parameters.orgName}}/${{ parameters.repoName }}-argocd.git
+        path: 'argocd/'
+        
   output:
     links:
       - title: Source Code Repository
