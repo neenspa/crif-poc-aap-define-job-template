@@ -221,7 +221,7 @@ spec:
       action: argocd:create-resources
       input:
         appName: ${{parameters.repoName}}-app
-        argoInstance: argoInstance1
+        argoInstance: main
         namespace: ${{parameters.namespace}}
         repoUrl: https://github.com/${{parameters.orgName}}/${{ parameters.repoName }}.git
         path: 'argo/ansibleJobTemplates'
